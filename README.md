@@ -20,7 +20,7 @@ The dialog includes the name of the working directory so you know which project 
 ## Install
 
 ```sh
-git clone https://github.com/your-username/ccc-popup
+git clone https://github.com/keyhell/ccc-popup
 cd ccc-popup
 ./ccc-popup.sh install
 ```
