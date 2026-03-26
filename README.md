@@ -1,10 +1,10 @@
 # ccc-popup
 
-A macOS notification popup for [Claude Code](https://claude.ai/code) that shows a native dialog when Claude needs your attention — with a one-click button to jump straight to Terminal.
+A macOS notification popup for the **Claude Code CLI** that shows a native dialog when Claude needs your attention — with a one-click button to jump straight to Terminal.
 
 ## How it works
 
-Claude Code fires a `Notification` hook whenever it needs user input. `ccc-popup` registers itself as that hook and displays a native macOS dialog:
+The Claude Code CLI fires a `Notification` hook whenever it needs user input. `ccc-popup` registers itself as that hook and displays a native macOS dialog:
 
 - **Ignore** — dismiss and do nothing
 - **Open Terminal** — bring Terminal.app to the foreground so you can respond
@@ -15,7 +15,7 @@ The dialog includes the name of the working directory so you know which project 
 
 - macOS
 - Python 3 (pre-installed on macOS)
-- [Claude Code](https://claude.ai/code)
+- [Claude Code CLI](https://claude.ai/code) (`claude` command-line tool)
 
 ## Install
 

@@ -1,4 +1,6 @@
 #!/bin/bash
+# ccc-popup — macOS notification popup for the Claude Code CLI (https://claude.ai/code)
+# Hooks into the Claude Code CLI's Notification event to surface a native dialog.
 set -euo pipefail
 
 # ── macOS guard ───────────────────────────────────────────────────────────────
