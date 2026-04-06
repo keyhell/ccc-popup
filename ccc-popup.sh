@@ -10,7 +10,7 @@ if [[ "$(uname)" != "Darwin" ]]; then
   exit 1
 fi
 
-VERSION="2026-01-01"
+VERSION="2026-04-06"
 INSTALL_PATH="$HOME/.claude/ccc-popup.sh"
 SETTINGS_PATH="$HOME/.claude/settings.json"
 TARGET="~/.claude/ccc-popup.sh"
