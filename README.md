@@ -11,6 +11,10 @@ The Claude Code CLI fires a `Notification` hook whenever it needs user input. `c
 
 The dialog includes the name of the working directory so you know which project Claude is waiting on.
 
+### Auto mode notifications
+
+When running Claude Code in auto mode (continuous autonomous execution), `ccc-popup` also hooks into the `Stop` event so you get notified when Claude finishes working. The popup message will say **"Claude finished working: \<project\>"** in that case, vs. **"Claude needs attention: \<project\>"** for regular input requests.
+
 ## Requirements
 
 - macOS
@@ -25,7 +29,7 @@ cd ccc-popup
 ./ccc-popup.sh install
 ```
 
-Then **restart Claude Code** for the hook to take effect.
+Then **restart Claude Code** for the hooks to take effect.
 
 ## Uninstall
 
@@ -33,7 +37,7 @@ Then **restart Claude Code** for the hook to take effect.
 ./ccc-popup.sh uninstall
 ```
 
-This removes `~/.claude/popup.sh` and strips the hook entry from `~/.claude/settings.json`.
+This removes `~/.claude/ccc-popup.sh` and strips all hook entries from `~/.claude/settings.json`.
 
 ## Manual setup
 
@@ -46,6 +50,39 @@ If you prefer to configure things yourself:
 {
   "hooks": {
     "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/ccc-popup.sh",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+For auto mode notifications, also add a `Stop` hook with the same command:
+
+```json
+{
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/ccc-popup.sh",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
       {
         "matcher": "",
         "hooks": [
