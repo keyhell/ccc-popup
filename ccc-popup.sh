@@ -10,13 +10,32 @@ if [[ "$(uname)" != "Darwin" ]]; then
   exit 1
 fi
 
+VERSION="2026-01-01"
 INSTALL_PATH="$HOME/.claude/ccc-popup.sh"
 SETTINGS_PATH="$HOME/.claude/settings.json"
 TARGET="~/.claude/ccc-popup.sh"
+UPDATE_CHECK_FILE="$HOME/.claude/ccc-popup-last-check"
+GITHUB_RAW_URL="https://raw.githubusercontent.com/keyhell/ccc-popup/main/ccc-popup.sh"
 
 # ── Functions ─────────────────────────────────────────────────────────────────
 
+_check_update() {
+  local today
+  today=$(date +%Y-%m-%d)
+  if [[ -f "$UPDATE_CHECK_FILE" ]] && [[ "$(cat "$UPDATE_CHECK_FILE")" == "$today" ]]; then
+    return
+  fi
+  echo "$today" > "$UPDATE_CHECK_FILE"
+  local remote_version
+  remote_version=$(curl -sf --max-time 5 "$GITHUB_RAW_URL" 2>/dev/null \
+    | grep '^VERSION=' | head -1 | cut -d'"' -f2) || return
+  if [[ -n "$remote_version" ]] && [[ "$remote_version" != "$VERSION" ]]; then
+    osascript -e 'display notification "A newer version is available at github.com/keyhell/ccc-popup" with title "ccc-popup update available"' 2>/dev/null || true
+  fi
+}
+
 cmd_popup() {
+  _check_update &
   INPUT=""
   if [ ! -t 0 ]; then
     INPUT="$(cat)"
