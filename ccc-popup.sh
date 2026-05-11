@@ -71,7 +71,6 @@ cmd_popup() {
   if [ ! -t 0 ]; then
     INPUT="$(cat)"
   fi
-
   MESSAGE="Claude needs attention"
 
   if [ -n "$INPUT" ]; then
@@ -79,6 +78,8 @@ cmd_popup() {
 import sys, json, os
 try:
     d=json.load(sys.stdin)
+    if d.get("notification_type") == "idle_prompt":
+        sys.exit(1)
     event = d.get("hook_event_name", "")
     name = os.path.basename(d.get("cwd",""))
     if event == "Stop":
@@ -88,7 +89,7 @@ try:
     print(base + (": " + name if name else ""))
 except Exception:
     print("Claude needs attention")
-' <<< "$INPUT") || true
+' <<< "$INPUT") || exit 0
 
     if [ -n "$RESULT" ]; then
       MESSAGE="$RESULT"
